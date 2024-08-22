@@ -106,3 +106,14 @@
 
     };
 };
+
+// activate sleep mode after press GRAVE and 5
+/ {
+    combos {
+        combo_sleep {
+            timeout-ms = <500>;  // Задержка для срабатывания комбинации
+            bindings = <&sleep>;  // Команда сна
+            key-positions = <0 5>;  // Укажите позиции кнопок для комбинации на каждой половинке
+        };
+    };
+};
