@@ -1,6 +1,6 @@
 / {
     // Настройки сканирования клавиатуры для левой половинки
-    kscan0: kscan_0 {
+    kscan2: kscan_2 {
         compatible = "zmk,kscan-gpio-matrix";
         label = "KSCAN";
         diode-direction = "col2row";
