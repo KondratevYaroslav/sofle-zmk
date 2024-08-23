@@ -6,10 +6,6 @@
 
 
 
-&default_transform {
-	col-offset = <6>;
-};
-
 &kscan0 {
     wakeup-source;
 	col-gpios
