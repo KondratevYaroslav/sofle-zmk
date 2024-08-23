@@ -1,0 +1,41 @@
+/ {
+    // Настройки сканирования клавиатуры
+    kscan0: kscan_0 {
+        compatible = "zmk,kscan-gpio-matrix";
+        label = "KSCAN";
+        diode-direction = "col2row";
+        wakeup-source;  // Разрешение пробуждения от событий на клавиатуре
+        /* Ваши настройки строк и столбцов */
+    };
+
+    // Настройки энкодеров
+    // Левый энкодер (обычно используется GPIO1_PIN3)
+    encoder0: gpio_encoder_0 {
+        compatible = "gpio-keys";  // Используем драйвер для энкодера
+        label = "ENCODER_LEFT";
+        gpios = <&gpio1 3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;  // Пин для левого энкодера
+        wakeup-source;  // Левый энкодер будет источником пробуждения
+    };
+
+    // Правый энкодер (обычно используется GPIO1_PIN6)
+    encoder1: gpio_encoder_1 {
+        compatible = "gpio-keys";  // Используем драйвер для энкодера
+        label = "ENCODER_RIGHT";
+        gpios = <&gpio1 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;  // Пин для правого энкодера
+        wakeup-source;  // Правый энкодер будет источником пробуждения
+
+    // Определение поведения soft off (мягкое выключение)
+    behaviors {
+        hw_soft_off: hw_soft_off {
+            compatible = "zmk,behavior-soft-off";
+            #binding-cells = <0>;
+            hold-time-ms = <5000>;  // Время удержания кнопки для выключения
+        };
+    };
+
+    // Настройки для пробуждения устройства
+    soft_off_wakers {
+        compatible = "zmk,soft-off-wakeup-sources";
+        wakeup-sources = <&encoder_left>, <&encoder_right>;  // Указываем энкодеры как источники пробуждения
+    };
+};
