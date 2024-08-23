@@ -10,7 +10,7 @@
 
     // Настройки энкодеров
     // Левый энкодер (обычно используется GPIO1_PIN3)
-    encoder0: gpio_encoder_0 {
+    encoder_left: gpio_encoder_0 {
         compatible = "gpio-keys";  // Используем драйвер для энкодера
         label = "ENCODER_LEFT";
         gpios = <&gpio1 3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;  // Пин для левого энкодера
@@ -18,11 +18,12 @@
     };
 
     // Правый энкодер (обычно используется GPIO1_PIN6)
-    encoder1: gpio_encoder_1 {
+    encoder_right: gpio_encoder_1 {
         compatible = "gpio-keys";  // Используем драйвер для энкодера
         label = "ENCODER_RIGHT";
         gpios = <&gpio1 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;  // Пин для правого энкодера
         wakeup-source;  // Правый энкодер будет источником пробуждения
+    };
 
     // Определение поведения soft off (мягкое выключение)
     behaviors {
