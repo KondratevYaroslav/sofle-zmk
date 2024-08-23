@@ -34,6 +34,7 @@
             key-positions = <5 6>;
             timeout-ms = <500>;
         };
+    };
 
     keymap {
         compatible = "zmk,keymap";
