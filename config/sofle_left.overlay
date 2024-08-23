@@ -2,30 +2,18 @@
     // Настройки сканирования клавиатуры для левой половинки
     kscan0: kscan_0 {
         compatible = "zmk,kscan-gpio-matrix";
-        label  "KSCAN";
+        label = "KSCAN";
         diode-direction = "col2row";
         wakeup-source;  // Разрешение пробуждения от событий на клавиатуре
         /* Ваши настройки строк и столбцов для левой половинки */
     };
 
-    // Настройки всех клавиш на левой половинке как источников пробуждения
-    keys {
-        compatible = "gpio-keys";
-        // Пример: настройка клавиш. Добавьте все необходимые ключи
-        key_0 {
-            gpios = <&gpio1 0 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;  // Пин для первой клавиши
-            label = "KEY_0";
-            wakeup-source;  // Клавиша будет источником пробуждения
-        };
-
-        // Добавьте остальные клавиши аналогично:
-        key_1 {
-            gpios = <&gpio1 1 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;  // Пин для второй клавиши
-            label = "KEY_1";
-            wakeup-source;  // Клавиша будет источником пробуждения
-        };
-
-        // ... добавьте все другие ключи
+    // Настройки энкодеров для левой половинки
+    encoder_left: gpio_encoder_0 {
+        compatible = "gpio-keys";  // Используем драйвер для энкодера
+        label = "ENCODER_LEFT";
+        gpios = <&gpio1 3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;  // Пин для левого энкодера
+        wakeup-source;  // Левый энкодер будет источником пробуждения
     };
 
     // Определение поведения soft off (мягкое выключение)
@@ -40,6 +28,6 @@
     // Настройки для пробуждения устройства
     soft_off_wakers {
         compatible = "zmk,soft-off-wakeup-sources";
-        wakeup-sources = <&kscan0>;  // Указываем kscan0 как источник пробуждения
+        wakeup-sources = <&encoder_left>;  // Указываем только левый энкодер как источник пробуждения
     };
 };
