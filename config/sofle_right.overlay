@@ -1,33 +1,32 @@
-/ {
-    // Настройки сканирования клавиатуры для правой половинки
-    kscan3: kscan_3 {
-        compatible = "zmk,kscan-gpio-matrix";
-        label = "KSCAN";
-        diode-direction = "col2row";
-        wakeup-source;  // Разрешение пробуждения от событий на клавиатуре
-        /* Ваши настройки строк и столбцов для правой половинки */
-    };
+/*
+ * Copyright (c) 2020 Ryan Cross
+ *
+ * SPDX-License-Identifier: MIT
+ */
 
-    // Настройки энкодеров для правой половинки
-    encoder_right: gpio_encoder_1 {
-        compatible = "gpio-keys";  // Используем драйвер для энкодера
-        label = "ENCODER_RIGHT";
-        gpios = <&gpio1 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;  // Пин для правого энкодера
-        wakeup-source;  // Правый энкодер будет источником пробуждения
-    };
+#include "sofle.dtsi"
 
-    // Определение поведения soft off (мягкое выключение)
-    behaviors {
-        hw_soft_off: hw_soft_off {
-            compatible = "zmk,behavior-soft-off";
-            #binding-cells = <0>;
-            hold-time-ms = <5000>;  // Время удержания кнопки для выключения
-        };
-    };
-
-    // Настройки для пробуждения устройства
-    soft_off_wakers {
-        compatible = "zmk,soft-off-wakeup-sources";
-        wakeup-sources = <&encoder_right>;  // Указываем только правый энкодер как источник пробуждения
-    };
+&default_transform {
+	col-offset = <6>;
 };
+
+&kscan0 {
+    wakeup-source;
+	col-gpios
+		= <&pro_micro 10 GPIO_ACTIVE_HIGH>
+		, <&pro_micro 16 GPIO_ACTIVE_HIGH>
+		, <&pro_micro 14 GPIO_ACTIVE_HIGH>
+		, <&pro_micro 15 GPIO_ACTIVE_HIGH>
+		, <&pro_micro 18 GPIO_ACTIVE_HIGH>
+		, <&pro_micro 19 GPIO_ACTIVE_HIGH>
+		;
+};
+
+&right_encoder {
+	status = "okay";
+};
+
+// Настройки для пробуждения устройства
+soft_off_wakers {
+    compatible = "zmk,soft-off-wakeup-sources";
+    wakeup-sources = <&kscan0>;  // Указываем kscan0 как источник пробуждения
